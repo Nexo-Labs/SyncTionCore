@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "preludepackage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Fiser12/PreludePackage",
+      "state" : {
+        "revision" : "7d35677ab4b5c8f186b7256061e6ea4ebe8dc805",
+        "version" : "0.0.2"
+      }
+    }
+  ],
+  "version" : 2
+}
