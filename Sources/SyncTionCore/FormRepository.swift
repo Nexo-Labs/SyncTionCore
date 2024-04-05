@@ -22,7 +22,6 @@ public protocol Repository: AnyObject {
 public protocol FormRepository: Repository {
     static var scratchTemplate: FormTemplate { get }
 
-    init()
 }
 
 public extension URLSession {
