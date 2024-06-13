@@ -1,5 +1,5 @@
 import XCTest
-@testable import SyncTionCore
+@testable import FormidableCore
 
 final class SyncTionCoreTests: XCTestCase {
     func testExample() throws {

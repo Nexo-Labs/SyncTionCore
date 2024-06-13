@@ -11,13 +11,13 @@ You should have received a copy of the GNU General Public License along with thi
 import PackageDescription
 
 let package = Package(
-    name: "SyncTionCore",
+    name: "FormidableCore",
     platforms: [.iOS(.v16), .macOS(.v12)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "SyncTionCore",
-            targets: ["SyncTionCore"]),
+            name: "FormidableCore",
+            targets: ["FormidableCore"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Fiser12/PreludePackage", from: "0.0.2")
@@ -27,10 +27,10 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "SyncTionCore",
+            name: "FormidableCore",
             dependencies: ["PreludePackage"]),
         .testTarget(
-            name: "SyncTionCoreTests",
-            dependencies: ["SyncTionCore"]),
+            name: "FormidableCoreTests",
+            dependencies: ["FormidableCore"]),
     ]
 )
