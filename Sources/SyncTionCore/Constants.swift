@@ -26,7 +26,7 @@ public struct Constants {
 }
 public extension URL {
     static let todoistAuth = URL(string: "https://todoist.com/oauth/authorize?client_id=\(Constants.todoistClientId)&scope=data:read,task:add")!
-    static let notionAuth = URL(string: "https://api.notion.com/v1/oauth/authorize?client_id=\(Constants.notionClientId)&response_type=code&owner=user&redirect_uri=https%3A%2F%2Fsynctionlabs.com%2Foauth%2Fnotion")!
+    static let notionAuth = URL(string: "https://api.notion.com/v1/oauth/authorize?client_id=\(Constants.notionClientId)&response_type=code&owner=user")!
     static let formsHeaderFile: URL = {
 #if DEBUG
         let formsHeaderFilename: String = "formsHeader_debug.dat"
