@@ -16,17 +16,13 @@ import Foundation
 
 fileprivate let docDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
-public struct Constants {
-    public static let notionSecretLabel = "NOTION_PRIVATE_SECRET"
-    public static let todoistSecretLabel = "TODOIST_PRIVATE_SECRET"
-    public static let todoistClientId = ProcessInfo.processInfo.environment["TODOIST_CLIENT_ID"] ?? "DefaultTodoistClientID"
-    public static let notionClientId = ProcessInfo.processInfo.environment["NOTION_CLIENT_ID"] ?? "DefaultNotionClientID"
-    public static let reveneuCatApiKey = ProcessInfo.processInfo.environment["REVENUECAT_API_KEY"] ?? "DefaultRevenueCatApiKey"
-
-}
 public extension URL {
-    static let todoistAuth = URL(string: "https://todoist.com/oauth/authorize?client_id=\(Constants.todoistClientId)&scope=data:read,task:add")!
-    static let notionAuth = URL(string: "https://api.notion.com/v1/oauth/authorize?client_id=\(Constants.notionClientId)&response_type=code&owner=user")!
+    static let todoistAuth: (String) -> URL = { code in
+        URL(string: "https://todoist.com/oauth/authorize?client_id=\(code)&scope=data:read,task:add")!
+    }
+    static let notionAuth: (String) -> URL = { code in
+        URL(string: "https://api.notion.com/v1/oauth/authorize?client_id=\(code)&response_type=code&owner=user")!
+    }
     static let formsHeaderFile: URL = {
 #if DEBUG
         let formsHeaderFilename: String = "formsHeader_debug.dat"
