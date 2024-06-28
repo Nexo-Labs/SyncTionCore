@@ -25,14 +25,12 @@ public struct FormTemplateId: FocusableIdProtocol {
 public struct FormHeader: Identifiable, Codable, Hashable {
     public var id: FormTemplateId
     public var style: FormModel.Style = .init(formName: "", color: "FFFFFF")
-    public var config: FormConfig = .init()
     public var lastOpen: Date?
     public var integration: FormServiceId
     
-    public init(id: FormTemplateId, style: FormModel.Style, config: FormConfig? = nil, lastOpen: Date? = nil, integration: FormServiceId) {
+    public init(id: FormTemplateId, style: FormModel.Style, lastOpen: Date? = nil, integration: FormServiceId) {
         self.id = id
         self.style = style
-        self.config = config ?? .init()
         self.lastOpen = lastOpen
         self.integration = integration
     }
@@ -96,7 +94,6 @@ public extension Direction {
 }
 #endif
 
-
 public struct FormTemplate: Identifiable, Codable, Hashable {
     public var header: FormHeader
     public var id: FormTemplateId {
@@ -119,10 +116,6 @@ public struct FormTemplate: Identifiable, Codable, Hashable {
 
 public typealias FormName = String
 public typealias AuthId = UUID
-
-public struct FormConfig: Codable, Hashable {
-    
-}
 
 public enum FormTheme: String, Codable, Equatable, Hashable {
     case Neumorphism = "Neumorphism"
