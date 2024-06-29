@@ -22,7 +22,7 @@ public struct FormTemplateId: FocusableIdProtocol {
     }
 }
 
-public struct FormHeader: Identifiable, Codable, Hashable {
+public struct FormHeader: Identifiable, Codable, Hashable, Sendable {
     public var id: FormTemplateId
     public var style: FormModel.Style = .init(formName: "", color: "FFFFFF")
     public var lastOpen: Date?
@@ -33,6 +33,14 @@ public struct FormHeader: Identifiable, Codable, Hashable {
         self.style = style
         self.lastOpen = lastOpen
         self.integration = integration
+    }
+
+    public static func preview(_ text: String, color: String, icon: FormIcon? = nil, theme: FormTheme? = nil, buttonStyle: FormModel.FormButtonStyle? = nil) -> FormHeader {
+        FormHeader(
+            id: .init(),
+            style: .init(formName: text, icon: icon, color: color, theme: theme, buttonStyle: buttonStyle),
+            integration: .init(hash: .init())
+        )
     }
 }
 
@@ -117,7 +125,7 @@ public struct FormTemplate: Identifiable, Codable, Hashable {
 public typealias FormName = String
 public typealias AuthId = UUID
 
-public enum FormTheme: String, Codable, Equatable, Hashable {
+public enum FormTheme: String, Codable, Hashable, Sendable {
     case Neumorphism = "Neumorphism"
     case Bordered = "Bordered"
     case PlainGrey = "PlainGrey"
@@ -125,18 +133,36 @@ public enum FormTheme: String, Codable, Equatable, Hashable {
     public static let all: [Self] = [.Bordered, .Neumorphism, .PlainGrey]
 }
 
+
+
 public extension FormModel {
-    struct Style: Codable, Hashable {
+    struct FormButtonStyle: Codable, Hashable, Sendable {
+        public var inverted = false
+        public var big = false
+        public var hideText = false
+        public var hideIcon = false
+
+        public init(inverted: Bool = false, big: Bool = false, hideText: Bool = false, hideIcon: Bool = false) {
+            self.inverted = inverted
+            self.big = big
+            self.hideText = hideText
+            self.hideIcon = hideIcon
+        }
+    }
+
+    struct Style: Codable, Hashable, Sendable {
         public var formName: FormName
         public var icon: FormIcon = .sfsymbols("square.and.pencil", nil)
         public var color: String
         public var theme: FormTheme = .Bordered
+        public var buttonStyle = FormButtonStyle()
         
-        public init(formName: FormName, icon: FormIcon? = nil, color: String, theme: FormTheme? = nil) {
+        public init(formName: FormName, icon: FormIcon? = nil, color: String, theme: FormTheme? = nil, buttonStyle: FormButtonStyle? = nil) {
             self.formName = formName
             self.icon = icon ?? .sfsymbols("square.and.pencil", nil)
             self.color = color
             self.theme = theme ?? .Bordered
+            self.buttonStyle = buttonStyle ?? self.buttonStyle
         }
     }
 }
@@ -144,11 +170,11 @@ public extension FormModel {
 public enum FormIcon: Codable, Hashable, Sendable {
     case sfsymbols(String, String?)
     case data(UUID)
-    case `static`(String)
+    case `static`(String, loadAsPng: Bool)
     
     public var string: String {
         switch self {
-        case let .static(str):
+        case let .static(str, _):
             return str
         case let .data(uuid):
             return uuid.uuidString
@@ -158,9 +184,16 @@ public enum FormIcon: Codable, Hashable, Sendable {
     }
     
     public var isStatic: Bool {
-        if case .static(_) = self {
+        if case .static(_, _) = self {
             return true
         }
         return false
+    }
+    
+    public var loadAsPng: Self {
+        if case let .static(str, _) = self {
+            return .static(str, loadAsPng: true)
+        }
+        return self
     }
 }
