@@ -108,13 +108,14 @@ public struct FormTemplate: Identifiable, Codable, Hashable {
         self.header.id
     }
     public var inputs: InputTemplates
-    public var firstInputId: InputId? = nil
+    public var entrypointInputId: InputId? = nil
     public var steps: [Step]
     
-    public init(_ header: FormHeader, inputs: [any InputTemplate], steps: [Step] = []) {
+    public init(_ header: FormHeader, inputs: [any InputTemplate], steps: [Step] = [], entrypointInputId: InputId? = nil) {
         self.header = header
         self.inputs = inputs.compactMap{ AnyInputTemplate($0) }
         self.steps = steps
+        self.entrypointInputId = entrypointInputId
     }
     
     public mutating func move(from source: IndexSet, to destination: Int) {

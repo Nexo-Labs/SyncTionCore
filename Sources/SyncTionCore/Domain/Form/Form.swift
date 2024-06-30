@@ -79,9 +79,9 @@ public struct FormModel: Identifiable {
         inputs = template.inputs
     }
 
-    public var firstInputId: InputId? {
-        if let firstInputId = template.firstInputId, inputs[firstInputId] != nil {
-            return firstInputId
+    public var entrypointInputId: InputId? {
+        if let entrypointInputId = template.entrypointInputId, inputs[entrypointInputId] != nil {
+            return entrypointInputId
         } else {
             return inputs
                 .filter{$0.template.show}
