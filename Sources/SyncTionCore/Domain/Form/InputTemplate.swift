@@ -49,7 +49,7 @@ public struct Tag: Codable, Equatable, Hashable, Sendable {
     }
 }
 
-public struct Header: Codable, Hashable, Sendable {
+public struct Header: Codable, Identifiable, Hashable, Sendable {
     public let id: InputId
     public let name: String
     public let icon: String

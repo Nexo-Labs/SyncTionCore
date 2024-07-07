@@ -53,6 +53,13 @@ public struct FormConfig: Codable, Hashable, Sendable {
         case disabled
         case recordInput(InputId)
         case recordAndSend(InputId)
+        
+        public var inputId: InputId? {
+            switch self {
+            case let .recordAndSend(inputId), let .recordInput(inputId): return inputId
+            default: return nil
+            }
+        }
     }
 }
 
