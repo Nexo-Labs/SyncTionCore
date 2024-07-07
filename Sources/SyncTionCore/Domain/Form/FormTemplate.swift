@@ -26,6 +26,7 @@ public struct FormHeader: Identifiable, Codable, Hashable, Sendable {
     public var id: FormTemplateId
     public var style: FormModel.Style = .init(formName: "", color: "FFFFFF")
     public var lastOpen: Date?
+    public var config: FormConfig
     public var integration: FormServiceId
     
     public init(id: FormTemplateId, style: FormModel.Style, lastOpen: Date? = nil, integration: FormServiceId) {
@@ -33,6 +34,7 @@ public struct FormHeader: Identifiable, Codable, Hashable, Sendable {
         self.style = style
         self.lastOpen = lastOpen
         self.integration = integration
+        self.config = FormConfig()
     }
 
     public static func preview(_ text: String, color: String, icon: FormIcon? = nil, theme: FormTheme? = nil, buttonStyle: FormModel.FormButtonStyle? = nil) -> FormHeader {
@@ -41,6 +43,16 @@ public struct FormHeader: Identifiable, Codable, Hashable, Sendable {
             style: .init(formName: text, icon: icon, color: color, theme: theme, buttonStyle: buttonStyle),
             integration: .init(hash: .init())
         )
+    }
+}
+
+public struct FormConfig: Codable, Hashable, Sendable {
+    public var recordingMode = RecordingMode.disabled
+    
+    public enum RecordingMode: Codable, Hashable, Sendable {
+        case disabled
+        case recordInput(InputId)
+        case recordAndSend(InputId)
     }
 }
 
