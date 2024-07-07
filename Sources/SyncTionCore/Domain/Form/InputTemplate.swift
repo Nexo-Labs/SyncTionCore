@@ -54,12 +54,20 @@ public struct Header: Codable, Identifiable, Hashable, Sendable {
     public let name: String
     public let icon: String
     public let tags: Set<Tag>
+    public var extraConfig: [String: String] = [:]
+
     
-    public init(name: String, icon: String, tags: Set<Tag>) {
+    public init(
+        name: String,
+        icon: String,
+        tags: Set<Tag>,
+        extraConfig: [String: String] = [:]
+    ) {
         self.id = InputId()
         self.name = name
         self.icon = icon
         self.tags = tags
+        self.extraConfig = extraConfig
     }
 }
 
